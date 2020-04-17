@@ -9,17 +9,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smartdevservice.lbtechtest.R
-import com.smartdevservice.lbtechtest.data.AlbumItem
+import com.smartdevservice.lbtechtest.data.Album
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_title_item.view.*
 
 /**
- * [RecyclerView.Adapter] that can display a [AlbumItem]
+ * [RecyclerView.Adapter] that can display a [Album]
  *
  */
 class MyTitleRecyclerViewAdapter(
     private val context: Context,
-    private val mValues: List<AlbumItem>?
+    private val mValues: List<Album>?
 ) : RecyclerView.Adapter<MyTitleRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
