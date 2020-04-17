@@ -4,31 +4,40 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.smartdevservice.lbtechtest.R
 import com.smartdevservice.lbtechtest.data.AlbumItem
-import com.smartdevservice.lbtechtest.network.RestApiFacade.restApi
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.smartdevservice.lbtechtest.ui.album.AlbumFragment
+import com.smartdevservice.lbtechtest.ui.title.TitleFragment
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnListListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val request = restApi.getAlbums()
-        request.enqueue(object : Callback<List<AlbumItem>?> {
-            override fun onResponse(call: Call<List<AlbumItem>?>, response: Response<List<AlbumItem>?>) {
-                if (response.body() != null) {
-                    Timber.d("onResponse : OK")
-                } else {
-                    Timber.d("onResponse : KO")
-                }
-            }
+        Timber.d("MainActivity : onCreate")
 
-            override fun onFailure(call: Call<List<AlbumItem>?>, t: Throwable) {
-                Timber.d("onFailure")
-            }
-        })
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.container, AlbumFragment.newInstance()).commit()
     }
+
+    override fun onItemClick(items: ArrayList<AlbumItem>) {
+        Timber.d("onItemClick : items = $items")
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.container, TitleFragment.newInstance(items)).commit()
+    }
+}
+
+/**
+ * This interface must be implemented by activities that contain this
+ * fragment to allow an interaction in this fragment to be communicated
+ * to the activity and potentially other fragments contained in that
+ * activity.
+ *
+ *
+ * See the Android Training lesson
+ * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
+ * for more information.
+ */
+interface OnListListener {
+    fun onItemClick(items: ArrayList<AlbumItem>)
 }
