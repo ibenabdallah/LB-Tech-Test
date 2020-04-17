@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smartdevservice.lbtechtest.R
-import com.smartdevservice.lbtechtest.data.AlbumItem
+import com.smartdevservice.lbtechtest.data.Album
 import kotlinx.android.synthetic.main.fragment_title.*
 
 /**
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_title.*
  */
 class TitleFragment : Fragment() {
 
-    private var titles: ArrayList<AlbumItem>? = null
+    private var titles: ArrayList<Album>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class TitleFragment : Fragment() {
     companion object {
         const val PARAM_LIST = "PARAM_LIST"
         @JvmStatic
-        fun newInstance(titles: ArrayList<AlbumItem>) : TitleFragment {
+        fun newInstance(titles: ArrayList<Album>) : TitleFragment {
             val fragment = TitleFragment()
             val bundle = Bundle()
             bundle.putParcelableArrayList(PARAM_LIST, titles)

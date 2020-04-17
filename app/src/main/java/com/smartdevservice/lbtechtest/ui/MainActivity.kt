@@ -3,7 +3,7 @@ package com.smartdevservice.lbtechtest.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.smartdevservice.lbtechtest.R
-import com.smartdevservice.lbtechtest.data.AlbumItem
+import com.smartdevservice.lbtechtest.data.Album
 import com.smartdevservice.lbtechtest.ui.album.AlbumFragment
 import com.smartdevservice.lbtechtest.ui.title.TitleFragment
 import timber.log.Timber
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(), OnListListener {
         ft.replace(R.id.container, AlbumFragment.newInstance()).commit()
     }
 
-    override fun onItemClick(items: ArrayList<AlbumItem>) {
+    override fun onItemClick(items: ArrayList<Album>) {
         Timber.d("onItemClick : items = $items")
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.container, TitleFragment.newInstance(items)).commit()
@@ -39,5 +39,5 @@ class MainActivity : AppCompatActivity(), OnListListener {
  * for more information.
  */
 interface OnListListener {
-    fun onItemClick(items: ArrayList<AlbumItem>)
+    fun onItemClick(items: ArrayList<Album>)
 }

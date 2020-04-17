@@ -3,7 +3,7 @@ package com.smartdevservice.lbtechtest.data
 import android.os.Parcel
 import android.os.Parcelable
 
-class AlbumItem(
+class Album(
     val albumId: Int,
     val id: Int,
     val title: String?,
@@ -35,12 +35,12 @@ class AlbumItem(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<AlbumItem> {
-        override fun createFromParcel(parcel: Parcel): AlbumItem {
-            return AlbumItem(parcel)
+    companion object CREATOR : Parcelable.Creator<Album> {
+        override fun createFromParcel(parcel: Parcel): Album {
+            return Album(parcel)
         }
 
-        override fun newArray(size: Int): Array<AlbumItem?> {
+        override fun newArray(size: Int): Array<Album?> {
             return arrayOfNulls(size)
         }
     }

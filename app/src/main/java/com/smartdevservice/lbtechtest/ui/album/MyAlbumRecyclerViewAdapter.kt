@@ -9,18 +9,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smartdevservice.lbtechtest.R
-import com.smartdevservice.lbtechtest.data.AlbumItem
+import com.smartdevservice.lbtechtest.data.Album
 import com.smartdevservice.lbtechtest.ui.OnListListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_album_item.view.*
 
 /**
- * [RecyclerView.Adapter] that can display a [AlbumItem] and makes a call to the
+ * [RecyclerView.Adapter] that can display a [Album] and makes a call to the
  * specified [OnListListener].
  */
 class MyAlbumRecyclerViewAdapter(
     private val context: Context,
-    private val mValues: HashMap<Int, ArrayList<AlbumItem>>,
+    private val mValues: HashMap<Int, ArrayList<Album>>,
     private val mListener: OnListListener?
 ) : RecyclerView.Adapter<MyAlbumRecyclerViewAdapter.ViewHolder>() {
 
@@ -28,7 +28,7 @@ class MyAlbumRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as ArrayList<AlbumItem>
+            val item = v.tag as ArrayList<Album>
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onItemClick(item)
@@ -54,7 +54,7 @@ class MyAlbumRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int = mValues.size
-    private fun getItem(position: Int): ArrayList<AlbumItem>? {
+    private fun getItem(position: Int): ArrayList<Album>? {
         return mValues[mValues.keys.elementAt(position)]
     }
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
