@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LBTechTest</string>
+    <string name="number_title_in_album">Cette album contient %d titre(s)</string>
 </resources>

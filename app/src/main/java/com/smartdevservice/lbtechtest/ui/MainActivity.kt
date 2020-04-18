@@ -21,9 +21,10 @@ class MainActivity : AppCompatActivity(), OnListListener {
     }
 
     override fun onItemClick(items: ArrayList<Album>) {
-        Timber.d("onItemClick : items = $items")
+        Timber.d("onItemClick : items.size = ${items.size}")
         val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.container, TitleFragment.newInstance(items)).commit()
+        ft.replace(R.id.container, TitleFragment.newInstance(items))
+            .addToBackStack("TitleFragment").commit()
     }
 }
 

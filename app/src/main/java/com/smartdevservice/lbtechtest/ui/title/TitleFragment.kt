@@ -36,7 +36,7 @@ class TitleFragment : Fragment() {
 
         recycleView.apply {
             layoutManager =  LinearLayoutManager(this@TitleFragment.context)
-            adapter = MyTitleRecyclerViewAdapter(this@TitleFragment.context!!, titles)
+            adapter = MyTitleRecyclerViewAdapter(titles)
         }
 
     }
