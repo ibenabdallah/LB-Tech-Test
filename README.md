@@ -2,7 +2,9 @@
 Test technique &lt;&lt;LB>>
 
 
-Pattern : MVVM
+Architecture : MVVM
+
+Pattern : Adapter pour le recycleView
 
 Data Base : Room 
 
