@@ -49,7 +49,7 @@ class AlbumFragment : Fragment() {
         }
 
 
-        albumViewModel.getAllAlbums()
+        albumViewModel.getAllAlbums(context!!)
     }
 
     override fun onAttach(context: Context) {

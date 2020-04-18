@@ -1,54 +1,39 @@
 package com.smartdevservice.lbtechtest.ui.album
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.smartdevservice.lbtechtest.MyApp
 import com.smartdevservice.lbtechtest.data.Album
-import com.smartdevservice.lbtechtest.network.RestApiFacade.restApi
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import timber.log.Timber
 
 class AlbumViewModel : ViewModel(){
 
-    val albums = MutableLiveData<HashMap<Int, ArrayList<Album>>>()
+    var albums : LiveData<HashMap<Int, ArrayList<Album>>>
 
-    fun getAllAlbums() {
-        val request = restApi.getAlbums()
-        request.enqueue(object : Callback<List<Album>?> {
-            override fun onResponse(
-                call: Call<List<Album>?>,
-                response: Response<List<Album>?>
-            ) {
-                val map: HashMap<Int, ArrayList<Album>> = HashMap()
-                val responses = response.body()
-                if (!responses.isNullOrEmpty()) {
-                    for (item in responses){
-                        if(map[item.albumId].isNullOrEmpty()) {
-                            map[item.albumId] = arrayListOf(item)
-                        }else{
-                            map[item.albumId]?.add(item)
-                        }
-                    }
-                    albums.postValue(map)
-                    Timber.d("onResponse : OK, map.size = ${map.size}")
-                } else {
-                    Timber.d("onResponse : KO")
-                }
-            }
-
-            override fun onFailure(call: Call<List<Album>?>, t: Throwable) {
-                Timber.d("onFailure")
-            }
-        })
+    init {
+        albums = Transformations.switchMap(MyApp.db.albumDao().getAllAlbums()) { albumList ->
+            findAlbums(albumList)
+        }
     }
 
-    fun getTitleByIdAlbum(albumId: Int) : LiveData<ArrayList<Album>> {
-        Timber.d("onResponse : OK, titles.size = ${albums.value?.get(albumId)?.size}")
-        val liveData = MutableLiveData<ArrayList<Album>>()
-        liveData.value = albums.value?.get(albumId)
-        return liveData
+    private fun findAlbums(albumList: List<Album>) : LiveData<HashMap<Int, ArrayList<Album>>> {
+        val map: HashMap<Int, ArrayList<Album>> = HashMap()
+        val albums = MutableLiveData<HashMap<Int, ArrayList<Album>>>()
+        for (item in albumList) {
+            if (map[item.albumId].isNullOrEmpty()) {
+                map[item.albumId] = arrayListOf(item)
+            } else {
+                map[item.albumId]?.add(item)
+            }
+        }
+        albums.value = map
+        return albums
+    }
+
+    fun getAllAlbums(context: Context) {
+        MyApp.repository.syncAlbums(context)
     }
 
 }

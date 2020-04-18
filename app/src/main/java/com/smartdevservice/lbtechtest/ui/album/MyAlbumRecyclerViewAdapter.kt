@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.smartdevservice.lbtechtest.R
 import com.smartdevservice.lbtechtest.data.Album
 import com.smartdevservice.lbtechtest.ui.OnListListener
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_album_item.view.*
 
@@ -28,7 +30,7 @@ class MyAlbumRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as ArrayList<Album>
+            val item: ArrayList<Album> = v.tag as ArrayList<Album>
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onItemClick(item)
@@ -44,9 +46,14 @@ class MyAlbumRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.titleTextView.text = item?.get(0)?.title
-        holder.numberTitleTextView.text = "Cette album contient ${item?.size} titre"
-        val builder = Picasso.Builder(context)
-        builder.build().load(item?.get(0)?.url).into(holder.iconImageView)
+        holder.numberTitleTextView.text = context.getString(R.string.number_title_in_album, item?.size)
+
+        Picasso.get()
+            .load(item?.get(0)?.url)
+            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+            .into(holder.iconImageView)
+
         with(holder.mView) {
             tag = item
             setOnClickListener(mOnClickListener)
